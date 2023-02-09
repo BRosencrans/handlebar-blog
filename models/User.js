@@ -5,12 +5,11 @@ const { Model, DataTypes } = require('sequelize');
 class User extends Model {}
 //sets up the user table
 User.init({
-    //
     username: {
-         type: DataTypes.STRING,
-         allowNull:false,
-         unique:true,
-         validate:{
+        type: DataTypes.STRING,
+        allowNull:false,
+        unique:true,
+        validate:{
             len: [3]
          }
     },
@@ -22,15 +21,16 @@ User.init({
         }
     }
 },{
- 
-    sequelize,   
-    modelName: 'user',
     hooks:{
-        beforeCreate:newUser=>{
-            newUser.password = bcrypt.hashSync(newUser.password,4);
-            return userObj;
+    beforeCreate:newUser=>{
+        newUser.password = bcrypt.hashSync(newUser.password,4);
+        return newUser;
         }
-    }
+    },
+    sequelize,   
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'user'
 });
 
-module.exports=User
+module.exports= User;
