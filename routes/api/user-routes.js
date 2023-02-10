@@ -5,7 +5,7 @@ const { User, Post, Comment } = require('../../models');
 router.get('/', (req, res) => {
    //gets all users
     User.findAll({
-    attributes: { exclude: ['[password']}
+    attributes: { exclude: ['password']}
     })
     .then(allUsers => res.json(allUsers))
     .catch(err => {
